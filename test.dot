@@ -1,0 +1,115 @@
+digraph sample1 /* ←idはつけなくもよい */ {
+    layout=dot // デフォルトはdot。dotは階層を持ったグラフを描くのに適している。他にfdp, neato, circo, osageなど。=の両側には空白があってもよい
+
+    // graph (node, edge以外の部分)の設定
+    graph [ // graph []で囲まなくても良い。カンマで区切らなくてもいいっぽい
+        label="サンプルだよ☆",   // 全体のラベル。文字列は"（ダブルクォート）で囲む。'（シングルクォート）は使えない
+        // labelloc = t,             ラベルを上に指定
+        // labeljust = l,            ラベルを左寄せ（l）、右寄せ（r）
+        fontname="Ricty Discord", // font指定。デフォルトはTimes-Roman
+        fontsize=10,              // デフォルトは14
+        fontcolor="#d33682",      // デフォルトはblack。16進数表記"#0033aF"や、0から1の実数で色、彩度、明度をカンマorスペース区切りで指定"0.6,.4 1"できる
+        bgcolor="#fdf6e3",        // 背景色の設定。
+        // rotate=90                 90度回転。指定できるのは90のみ。指定したら、何も出力されなくなった。
+        // size="4,3!",              インチ指定で、横、縦。縦横比は保たれる。
+                                  // !をつけないとデフォルトのサイズから縮小はされるが、拡大はされない
+        rankdir=TB,               // ノードの配置の仕方。デフォルトTBで上から下に向かって配置される。他にBT,LR,RLがある。
+    ]
+
+    // nodeの設定
+    // nodeの宣言。node[]で設定する前なのでデフォルトの設定になる
+    A;
+
+    // nodeの設定
+    node [
+        shape=diamond,       // nodeの形。デフォルトはellipse
+        width=1.5,           // 幅。設定しないと自動で調節してくれる
+        height=0.5,          // 高さ
+        // fixedsize=false,     デフォルトfalse。trueにすると中に入っている文字よりも小さくできる
+        style=rounded,       // 枠線のスタイル。デフォルトはsolid。
+        color="#268bd2",     // 枠線の色
+        fontname="Monaco",
+        fontcolor="#b58900",
+        peripheries=2,       // 二重線。
+    ]
+
+    // nodeの宣言。上の設定が反映される
+    B; C;
+
+    // nodeの設定を上書き
+    node [
+        shape=circle
+        style=striped
+        width=0.5
+        height=0.5
+        color="#93a1a1"
+        style=filled,         // 塗りつぶし
+        fillcolor="#eee8d5",  // 塗りつぶしのカラー
+        peripheries=1
+    ]
+
+    // nodeの宣言。上書きされた設定が反映される
+    D;
+
+    // nodeごとに個別の設定ができる
+    E [
+        label="E\lsecond line\nthird line\r" // labelの設定。デフォルトは\N(nodeのid)。
+                                             // \nでセンタリング改行、\lで左寄せ改行、\rで右寄せ改行
+        width=2
+        shape=box
+        style=dashed
+    ];
+
+    F [
+        image="tmsanrinsha_icon.jpg" // 画像を指定できる
+        shape=none                   // recordは指定しても画像が表示されない。
+        label=""
+        xlabel="\N"                  // 外側にnodeのidを表示。位置は決められないっぽい
+        color="#fdf6e3"              // 枠を見せたくないので背景色に
+    ]
+
+    G [
+        shape=none,
+        // labelにtable, br, font, imgのタグが使える。
+        // imgはtableの中にしかかけない。imageとbrは/>で閉じる
+        // <>で全体を囲む
+        label=<<table border="0"><tr><td><img src="tmsanrinsha_icon.jpg" /></td></tr><tr><td><font color="red">red</font><br />G</td></tr></table>>,
+    ]
+
+    H [
+        shape=record,             // recordを指定すると線で区切ってラベルを書ける
+        label="left|center|right" // |で区切る。{}で囲むと縦に並ぶようになる。もっと複雑なものが描ける
+    ]
+
+    // edgeの設定
+    edge [
+        color = "#859900",
+        labelfloat=false,  // ラベルの重なりを許さない（デフォルト）
+    ];
+
+    // edgeの個別の設定は矢印の横に書く
+    A -> A;
+    A -> B [label="A → B"];                // edgeにもlabelが使える
+    A -> C [arrowsize=2];                   // 矢印のサイズ
+    {rank=same; B; C}                       // BとCを同じランクにする
+    C -> D [
+        arrowhead=odot, arrowtail=inv       // 矢印の始端と終端の形。arrowtailが効かない？
+        weight=2                            // C-D間のedgeの重みを上げるとなるべく近く、垂直なるように配置される
+    ];
+    B -> E [dir=back, arrowhead=inv];       // 矢印の向き。back, both, none
+    D -> E [dir=both];
+    E -> F;
+    E -> G -> H;                            // まとめてかける
+    F -> {J, K}
+
+    // サブグラフ。名前をclusterで始めると枠ができて、ラベルも指定できる
+    // サブグラフの中にサブグラフ、サブグラフ間のedgeはdot layoutではできない。
+    // fdp layoutならできる
+    subgraph cluster1 {
+        label="cluster1";
+        I [shape=ellipse color=black, fontcolor=black, fontname="Times-Roman", fillcolor="#fdf6e3" ]
+        I -> A;
+        {rank=same; A; I;}
+    }
+
+}

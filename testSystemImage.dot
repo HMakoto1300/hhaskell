@@ -1,0 +1,25 @@
+graph sample {
+layout=dot // デフォルトはdot。dotは階層を持ったグラフを描くのに適している。他にfdp, neato, circo, osageなど。=の両側には空白があってもよい
+
+graph [ // graph []で囲まなくても良い。カンマで区切らなくてもいいっぽい
+    rankdir=TB               // ノードの配置の仕方。デフォルトTBで上から下に向かって配置される。他にBT,LR,RLがある。
+];
+node [
+    shape=box       // nodeの形。デフォルトはellipse
+];
+edge [
+    labelfloat=false  // ラベルの重なりを許さない（デフォルト）
+];
+
+
+A,B,C;
+A -> B;
+
+subgraph tata {
+layout=circo
+d;
+e;
+}
+
+
+}

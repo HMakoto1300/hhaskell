@@ -1,10 +1,16 @@
+import Data.List()
 
+f :: (Num a, Eq a) => [a] -> a
+f xs
+   | xs == []    = 0
+   | otherwise   = head xs + f (tail xs)
 
+g :: [Char] -> [Char]
+g xs
+  | xs ==[] = "it is null"
+  | otherwise = foldl (\acc x -> x : acc) [] xs
 
-import Data.List
-
-
-f = foldl1 (\acc x -> acc + x)
-
-
-main = putStrLn(f [1,2,3])
+main :: IO()
+main = do
+  let b = g "name"
+  putStrLn b
