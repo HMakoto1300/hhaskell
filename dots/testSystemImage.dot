@@ -11,15 +11,9 @@ edge [
     labelfloat=false  // ラベルの重なりを許さない（デフォルト）
 ];
 
-
-A,B,C;
-A -> B;
-
-subgraph tata {
-layout=circo
-d;
-e;
-}
-
+F [label ="off"];
+F -> F;
+N [label ="on"];
+// F -> N
 
 }

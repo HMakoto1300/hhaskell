@@ -12,5 +12,5 @@ g xs
 
 main :: IO()
 main = do
-  let b = g "name"
+  let b = show $ f [1,2,3]
   putStrLn b

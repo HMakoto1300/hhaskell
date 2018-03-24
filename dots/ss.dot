@@ -1,0 +1,18 @@
+digraph graph_name {
+  graph [
+    charset = "UTF-8";
+    label = "sample graph",
+  ];
+
+  node [
+    shape = box
+  ];
+
+  edge [
+  ];
+
+ "初期"->"手続き中"->"手続き完了"->"アカウント登録済";
+"手続き中"->"メール"
+
+
+}
